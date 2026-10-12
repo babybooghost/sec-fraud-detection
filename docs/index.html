@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="An interactive research demo with clearly labeled synthetic data. Explore held-out model results, decision thresholds, and model diagnostics.">
+<title>SEC Fraud Detection | Synthetic Research Demo</title>
+<link rel="icon" href="data:,"><link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to dashboard</a>
+<aside class="sidebar">
+<div class="side-label"><span id="project-number">Research</span></div>
+<nav aria-label="Dashboard sections"><a href="#overview" class="nav-active">Overview</a><a href="#evaluation">Evaluation</a><a href="#observations">Observations</a><a href="#methodology">Methodology</a></nav>
+<div class="sidebar-bottom"><p class="side-label">OTHER PROJECT</p><a id="other-project" class="other-link" href="#">Companion research <span aria-hidden="true">↗</span></a><div class="side-rule"></div><p>Saashwath Shankar<br><span class="muted">Independent research</span></p><a id="source-link" class="source-link" href="#" target="_blank" rel="noopener">Source on GitHub ↗</a></div>
+</aside>
+<main id="main">
+<header class="topbar"><span id="top-label">RESEARCH / INTERACTIVE DEMO</span><button id="provenance" class="text-button">About the data <span aria-hidden="true">↗</span></button></header>
+<div id="load-error" role="alert" hidden></div>
+<div id="dashboard" aria-busy="true">
+<section id="overview" class="overview">
+<div class="notice"><span class="status-dot"></span><strong>SYNTHETIC DATA</strong><span id="synthetic-detail">Illustrative experiment. Not a live feed or a real-world performance claim.</span></div>
+<div class="heading-row"><div><p class="eyebrow" id="eyebrow">EXPERIMENT 01</p><h1 id="title">Loading research demo</h1><p id="intro" class="intro">Reading the saved Python experiment.</p></div><button id="download" class="download-button" disabled>Download results <span aria-hidden="true">↓</span></button></div>
+<div class="context-row"><span id="context-count"></span><span id="context-time"></span><span id="context-method"></span></div>
+<div class="metrics" aria-live="polite"><div><span class="metric-label">HOLDOUT ROC-AUC</span><strong id="auc">...</strong><p id="auc-note"></p></div><div><span class="metric-label">AVERAGE PRECISION</span><strong id="ap">...</strong><p id="ap-note"></p></div><div><span class="metric-label" id="third-label">HOLDOUT OBSERVATIONS</span><strong id="third">...</strong><p id="third-note"></p></div></div>
+</section>
+<div class="workspace" id="evaluation">
+<section class="primary-plot"><div class="section-heading"><div><p class="eyebrow">RESULTS</p><h2 id="primary-title">Forward volatility</h2></div><span class="tag" id="primary-tag"></span></div><p class="chart-description" id="primary-description"></p><div id="primary-chart" class="chart"></div><div class="legend" id="primary-legend"></div><p class="source-caption" id="primary-caption"></p></section>
+<aside class="decision-panel"><div class="section-heading"><h2>Model controls</h2><button id="reset" class="text-button">Reset</button></div><label class="control-label" for="model">MODEL</label><select id="model"></select><div class="threshold-heading"><label class="control-label" for="threshold">DECISION THRESHOLD</label><output id="threshold-value" for="threshold">0.50</output></div><input id="threshold" type="range" min="0" max="1" step="0.01" value="0.5"><div class="range-labels"><span id="range-min">0.00</span><span id="range-max">1.00</span></div><p class="control-note" id="score-note"></p><div class="matrix-title">Prediction outcomes <span id="n-count"></span></div><div class="matrix" id="matrix" aria-live="polite"></div><div id="decision-summary" class="decision-summary" aria-live="polite"></div><p class="control-note bottom-note">Exploration only. Moving this threshold changes displayed decisions, not the fitted model or its ROC-AUC.</p></aside>
+</div>
+<section class="diagnostics"><div class="diagnostic"><div class="section-heading"><div><p class="eyebrow">RANKING QUALITY</p><h2>ROC curve</h2></div><span class="tag">HOLDOUT ONLY</span></div><div id="roc-chart" class="chart"></div><div class="legend"><span><i class="key accent"></i>Selected model</span><span><i class="key dashed"></i>Random ranking</span></div><p class="source-caption">Scores from the saved Python run. Threshold changes move the marked operating point.</p></div><div class="diagnostic"><div class="section-heading"><div><p class="eyebrow" id="secondary-eyebrow">GLOBAL REPRESENTATION</p><h2 id="secondary-title">PCA projection</h2></div><span class="tag" id="secondary-tag"></span></div><div id="secondary-chart" class="chart"></div><div class="legend" id="secondary-legend"></div><p class="source-caption" id="secondary-caption"></p></div></section>
+<section id="observations" class="observations"><div class="section-heading"><div><p class="eyebrow">OBSERVATIONS</p><h2 id="table-title">Holdout observations</h2></div><label class="check-control"><input type="checkbox" id="errors-only"> Only errors</label></div><p class="chart-description" id="table-description"></p><div class="table-scroll"><table><caption class="sr-only">Synthetic held-out observations and decisions at the selected threshold</caption><thead><tr><th id="record-heading">Decision time (UTC)</th><th>Observed label</th><th id="score-heading">Model score</th><th>Prediction</th><th>Outcome</th></tr></thead><tbody id="records"></tbody></table></div><div class="table-footer"><span id="page-info" aria-live="polite"></span><div><button id="previous" aria-label="Previous observations">← Previous</button><button id="next" aria-label="Next observations">Next →</button></div></div></section>
+<section id="methodology" class="methodology"><div><p class="eyebrow">METHODOLOGY</p><h2>Evaluation setup</h2><p id="method-intro"></p><button id="method-data" class="text-button">Read the data note ↗</button></div><div id="method-steps"></div></section>
+<footer><span id="footer-label">RESEARCH DEMO / SYNTHETIC DATA</span><span>Precomputed Python results. Browser-side exploration.</span></footer>
+</div>
+</main>
+<dialog id="data-dialog" aria-labelledby="dialog-title"><div class="dialog-heading"><span class="eyebrow">DATA & LIMITATIONS</span><button id="close-dialog" aria-label="Close data note">×</button></div><h2 id="dialog-title">Synthetic data demo</h2><p id="data-provenance"></p><div class="dialog-note" id="limitations"></div><p class="source-caption">Reproduce this dataset with <code>python build_demo.py</code> after installing the repository dependencies. No credentials or paid API calls are needed.</p><button id="dialog-done" class="download-button">Got it</button></dialog>
+</body></html>

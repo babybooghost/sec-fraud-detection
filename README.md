@@ -4,6 +4,21 @@ A research pipeline for accounting fraud classification using annual SEC financi
 
 It builds Beneish ratios and nonlinear features, trains XGBoost on historical filings, and checks performance and attribution drift on forward years. Python 3.11+.
 
+## Browser demo
+
+[Open the dashboard](https://babybooghost.github.io/sec-fraud-detection/). No terminal, account, or API key is needed.
+
+The dashboard shows actual Python model outputs from **synthetic inputs**. Change the decision threshold, inspect errors, and download the results. Browser controls recalculate decisions from saved scores; they do not retrain models. All displayed metrics describe this generated experiment, not real-world performance.
+
+To regenerate the checked-in dataset after installing dependencies:
+
+```sh
+.venv/bin/python build_demo.py
+.venv/bin/python -m http.server 8765 --directory docs
+```
+
+Open `http://localhost:8765`. GitHub Pages serves `docs/` from `main`. Commit regenerated `docs/data.json` to publish new results. The dataset tests independently recompute ROC-AUC, average precision, and ROC points from the saved predictions.
+
 ## Run
 
 ```sh
